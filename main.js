@@ -42,14 +42,8 @@ Game.prototype.initialize = function () {
     this.app.root.addChild(this.camera);
 
 // Add your house model here
-var house = new pc.Entity('house');
-house.addComponent('model', {
-    type: 'box'
-});
-house.setLocalScale(5, 5, 5);
-house.setLocalPosition(0, 2.5, 0);
-house.model.meshInstances[0].material = this.material(new pc.Color(0.8, 0.6, 0.4));
-this.app.root.addChild(house);
+
+
 
     this.app.keyboard.on(pc.EVENT_KEYDOWN, this.onKeyDown, this);
     this.app.keyboard.on(pc.EVENT_KEYUP, this.onKeyUp, this);
