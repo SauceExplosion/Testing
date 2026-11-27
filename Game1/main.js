@@ -17,7 +17,7 @@ Game.prototype.initialize = function () {
     ground.addComponent('render', { type: 'box' });
     ground.setLocalScale(20, 0.2, 20);
     ground.setLocalPosition(0, -0.1, 0);
-    ground.render.meshInstances[0].material = this.material(new pc.Color(0.25, 0.55, 0.25));
+    ground.render.meshInstances[0].material = this.material(new pc.Color(0.55, 0.55, 0.55));
     this.app.root.addChild(ground);
 
     for (var i = 0; i < 5; i++) {
