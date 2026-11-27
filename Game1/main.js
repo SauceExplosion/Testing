@@ -41,34 +41,21 @@ Game.prototype.initialize = function () {
     this.camera.setLocalPosition(0, 1.6, 8);
     this.app.root.addChild(this.camera);
 
-    // 1. 先建立並註冊 asset（此時尚未開始下載）
-    var indiaAsset = new pc.Asset('india', 'texture', {
-        url: '/r2/india.jpg'
+    // 只在 initialize 階段向 R2 下載 house.glb，但不建立實體、不加入場景
+    var houseAsset = new pc.Asset('house', 'container', {
+        url: '/r2/house.glb'
     });
 
-    indiaAsset.once('load', function (asset) {
-        console.log('20 秒後已從 R2 下載完成 india.jpg（尚未套用到任何物件）:', asset);
+    houseAsset.once('load', function (asset) {
+        console.log('house.glb 已下載完成（尚未放進場景使用）:', asset);
     });
 
-    indiaAsset.once('error', function (err) {
-        console.error('載入 india.jpg 失敗:', err);
+    houseAsset.once('error', function (err) {
+        console.error('載入 house.glb 失敗:', err);
     });
 
-    this.app.assets.add(indiaAsset);
-
-    // 2. 延遲 20 秒（20000 毫秒）才真正呼叫 load 開始下載
-    var self = this;
-    this.loadTimer = setTimeout(function () {
-        console.log('已經過 20 秒，開始向 /r2/india.jpg 發出請求...');
-        self.app.assets.load(indiaAsset);
-    }, 20000);
-
-    // 若離開或銷毀腳本，順便清除計時器避免殘留
-    this.on('destroy', function () {
-        if (this.loadTimer) {
-            clearTimeout(this.loadTimer);
-        }
-    });
+    this.app.assets.add(houseAsset);
+    this.app.assets.load(houseAsset);
 
     this.app.keyboard.on(pc.EVENT_KEYDOWN, this.onKeyDown, this);
     this.app.keyboard.on(pc.EVENT_KEYUP, this.onKeyUp, this);
