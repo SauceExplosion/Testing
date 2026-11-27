@@ -41,9 +41,24 @@ Game.prototype.initialize = function () {
     this.camera.setLocalPosition(0, 1.6, 8);
     this.app.root.addChild(this.camera);
 
-// Add your house model here
+    // 一開始就在 initialize 階段向 R2 請求載入 house.glb
+    var self = this;
+    var houseAsset = new pc.Asset('house', 'container', {
+        url: '/r2/house.glb'
+    });
 
+    houseAsset.once('load', function (asset) {
+        var houseEntity = asset.resource.instantiateRenderEntity();
+        houseEntity.setLocalPosition(0, 0, 0);
+        self.app.root.addChild(houseEntity);
+    });
 
+    houseAsset.once('error', function (err) {
+        console.error('載入 house.glb 失敗:', err);
+    });
+
+    this.app.assets.add(houseAsset);
+    this.app.assets.load(houseAsset);
 
     this.app.keyboard.on(pc.EVENT_KEYDOWN, this.onKeyDown, this);
     this.app.keyboard.on(pc.EVENT_KEYUP, this.onKeyUp, this);
