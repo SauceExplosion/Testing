@@ -1,9 +1,14 @@
 {
   "name": "testing",
-  "compatibility_date": "2026-11-26",
+  "main": "src/index.js",
+  "compatibility_date": "2026-01-01",
   "assets": {
-    "directory": ".",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
-  }
+    "directory": "./"
+  },
+  "r2_buckets": [
+    {
+      "binding": "ASSETS_BUCKET",
+      "bucket_name": "game-assets"
+    }
+  ]
 }
