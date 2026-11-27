@@ -41,16 +41,13 @@ Game.prototype.initialize = function () {
     this.camera.setLocalPosition(0, 1.6, 8);
     this.app.root.addChild(this.camera);
 
-    // 一開始就在 initialize 階段向 R2 請求載入 house.glb
-    var self = this;
-    var houseAsset = new pc.Asset('house', 'container', {
-        url: '/r2/house.glb'
+    // 只在 initialize 階段向 R2 下載 house.glb，但不建立實體、不加入場景
+    var houseAsset = new pc.Asset('india', 'container', {
+        url: '/r2/india.jpg'
     });
 
     houseAsset.once('load', function (asset) {
-        var houseEntity = asset.resource.instantiateRenderEntity();
-        houseEntity.setLocalPosition(0, 0, 0);
-        self.app.root.addChild(houseEntity);
+        console.log('house.glb 已下載完成（尚未放進場景使用）:', asset);
     });
 
     houseAsset.once('error', function (err) {
